@@ -82,6 +82,44 @@
 
 ---
 
+src/
+├── app/
+│   ├── core/                         # Core modules, services, guards, etc.
+│   │   ├── services/                 # Common/shared services (e.g., API, authentication)
+│   │   ├── guards/                   # Route guards
+│   │   ├── interceptors/             # HTTP interceptors (e.g., auth token)
+│   │   ├── models/                   # Data models (e.g., Note, User)
+│   │   └── utils/                    # Utility classes or helpers
+│   ├── features/                     # Feature-specific modules
+│   │   ├── note/                     # Note module
+│   │   │   ├── components/           # Components related to notes (e.g., note list, note detail)
+│   │   │   ├── services/             # Services related to notes (e.g., note API service)
+│   │   │   ├── note.module.ts        # Note module definition
+│   │   │   └── note-routing.module.ts # Note routing module
+│   ├── shared/                       # Shared components, directives, pipes
+│   │   ├── components/               # Shared UI components (e.g., buttons, modals)
+│   │   ├── directives/               # Shared directives (e.g., validation)
+│   │   ├── pipes/                    # Shared pipes (e.g., date format)
+│   │   └── shared.module.ts          # Shared module definition
+│   ├── layout/                       # Layout components (e.g., header, footer, sidebar)
+│   │   ├── components/               # Layout-related components
+│   │   ├── layout.module.ts          # Layout module definition
+│   ├── authentication/               # Authentication-related modules (login, register)
+│   │   ├── components/               # Auth components (e.g., login, register)
+│   │   ├── services/                 # Auth services (e.g., login API)
+│   │   ├── authentication.module.ts  # Auth module definition
+│   ├── app.component.ts              # Main app component
+│   ├── app.module.ts                 # Root module
+│   ├── app-routing.module.ts         # App-wide routing module
+├── assets/                           # Static assets (images, styles, etc.)
+│   ├── images/
+│   ├── styles/                       # Global styles
+├── environments/                     # Environment-specific settings (e.g., dev, prod)
+│   ├── environment.ts                # Default environment
+│   ├── environment.prod.ts           # Production environment
+└── index.html                        # Entry HTML file
+
+
 ## Dependencies
 
 ### Backend (Spring Boot)
