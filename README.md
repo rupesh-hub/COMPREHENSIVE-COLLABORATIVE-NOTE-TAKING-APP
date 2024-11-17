@@ -369,3 +369,294 @@ Manages application-wide configurations.
 6. **Notes ↔ Media**: One-to-Many.
 7. **Users ↔ Activity**: One-to-Many.
 8. **Users ↔ Notifications**: One-to-Many.
+
+
+
+# **Collaborative Note-Taking Application Documentation**
+
+---
+
+## **Global Response Format**
+A unified response structure for all API endpoints.
+
+### **Response Format**
+```json
+{
+  "status": "SUCCESS/FAILURE",
+  "message": "Descriptive message about the response",
+  "data": "Payload returned in case of success",
+  "error": "Error details (only present in case of failure)"
+}
+
+
+Authentication APIs
+1. User Registration
+Endpoint: /api/auth/register
+Method: POST
+Description: Registers a new user.
+Request
+{
+  "username": "john_doe",
+  "email": "john.doe@example.com",
+  "password": "securepassword"
+}
+
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "User registered successfully",
+  "data": {
+    "userId": "UUID"
+  }
+}
+2. User Login
+Endpoint: /api/auth/login
+Method: POST
+Description: Authenticates a user and generates a JWT token.
+Request
+json
+Copy code
+{
+  "email": "john.doe@example.com",
+  "password": "securepassword"
+}
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "Login successful",
+  "data": {
+    "token": "JWT_TOKEN",
+    "userId": "UUID"
+  }
+}
+User Management APIs
+1. Fetch User Profile
+Endpoint: /api/users/{userId}
+Method: GET
+Description: Retrieves user profile details by ID.
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "User profile retrieved successfully",
+  "data": {
+    "id": "UUID",
+    "username": "john_doe",
+    "email": "john.doe@example.com",
+    "avatar_url": "https://example.com/avatar.png"
+  }
+}
+2. Update User Profile
+Endpoint: /api/users/{userId}
+Method: PUT
+Description: Updates the user profile information.
+Request
+json
+Copy code
+{
+  "username": "new_username",
+  "avatar_url": "https://example.com/new_avatar.png"
+}
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "User profile updated successfully",
+  "data": null
+}
+Project Management APIs
+1. Create Project
+Endpoint: /api/projects
+Method: POST
+Description: Creates a new project.
+Request
+json
+Copy code
+{
+  "name": "New Project",
+  "description": "Project description"
+}
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "Project created successfully",
+  "data": {
+    "projectId": "UUID"
+  }
+}
+2. Fetch All Projects
+Endpoint: /api/projects
+Method: GET
+Description: Retrieves all projects for the authenticated user.
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "Projects retrieved successfully",
+  "data": [
+    {
+      "id": "UUID",
+      "name": "Project 1",
+      "description": "Description of project 1"
+    },
+    {
+      "id": "UUID",
+      "name": "Project 2",
+      "description": "Description of project 2"
+    }
+  ]
+}
+Note Management APIs
+1. Create Note
+Endpoint: /api/notes
+Method: POST
+Description: Creates a new note within a project.
+Request
+json
+Copy code
+{
+  "projectId": "UUID",
+  "title": "New Note",
+  "content": "Note content here..."
+}
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "Note created successfully",
+  "data": {
+    "noteId": "UUID"
+  }
+}
+2. Update Note
+Endpoint: /api/notes/{noteId}
+Method: PUT
+Description: Updates an existing note.
+Request
+json
+Copy code
+{
+  "title": "Updated Note Title",
+  "content": "Updated note content..."
+}
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "Note updated successfully",
+  "data": null
+}
+3. Fetch All Notes in a Project
+Endpoint: /api/projects/{projectId}/notes
+Method: GET
+Description: Retrieves all notes within a specified project.
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "Notes retrieved successfully",
+  "data": [
+    {
+      "id": "UUID",
+      "title": "Note 1",
+      "content": "Content of note 1"
+    },
+    {
+      "id": "UUID",
+      "title": "Note 2",
+      "content": "Content of note 2"
+    }
+  ]
+}
+Collaborators APIs
+1. Add Collaborator
+Endpoint: /api/projects/{projectId}/collaborators
+Method: POST
+Description: Adds a collaborator to a project.
+Request
+json
+Copy code
+{
+  "userId": "UUID",
+  "role": "editor"
+}
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "Collaborator added successfully",
+  "data": null
+}
+2. Fetch Collaborators
+Endpoint: /api/projects/{projectId}/collaborators
+Method: GET
+Description: Retrieves all collaborators for a specific project.
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "Collaborators retrieved successfully",
+  "data": [
+    {
+      "id": "UUID",
+      "username": "john_doe",
+      "role": "editor"
+    },
+    {
+      "id": "UUID",
+      "username": "jane_smith",
+      "role": "viewer"
+    }
+  ]
+}
+Activity Logging APIs
+1. Fetch Activity Logs
+Endpoint: /api/activity
+Method: GET
+Description: Retrieves activity logs for auditing purposes.
+Response
+json
+Copy code
+{
+  "status": "SUCCESS",
+  "message": "Activity logs retrieved successfully",
+  "data": [
+    {
+      "id": "UUID",
+      "userId": "UUID",
+      "activityType": "note_created",
+      "details": {
+        "noteId": "UUID",
+        "title": "Sample Note"
+      },
+      "timestamp": "2024-11-18T10:30:00Z"
+    }
+  ]
+}
+Error Response Example
+For validation or server-side errors:
+
+json
+Copy code
+{
+  "status": "FAILURE",
+  "message": "Validation error",
+  "error": {
+    "field": "email",
+    "message": "Email is already in use"
+  }
+}
