@@ -185,4 +185,187 @@
 
 ---
 
-This guide provides a comprehensive roadmap to build your note-taking application. Let me know if you need further details about any section!
+# **Collaborative Note-Taking Application Database Design**
+
+## **1. Users Table**
+Holds user account details.
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `username`       | VARCHAR(50)    | UNIQUE, NOT NULL        |
+| `email`          | VARCHAR(100)   | UNIQUE, NOT NULL        |
+| `password`       | VARCHAR(255)   | NOT NULL                |
+| `avatar_url`     | TEXT           | NULLABLE                |
+| `created_at`     | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP |
+| `updated_at`     | TIMESTAMP      | ON UPDATE CURRENT_TIMESTAMP |
+
+---
+
+## **2. Roles Table**
+Defines roles for users (e.g., Admin, Editor, Viewer).
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `name`           | VARCHAR(50)    | UNIQUE, NOT NULL        |
+| `description`    | TEXT           | NULLABLE                |
+
+---
+
+## **3. User Roles Table**
+Maps users to roles (many-to-many relationship).
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `user_id`        | UUID           | PK, FK → `Users(id)`    |
+| `role_id`        | UUID           | PK, FK → `Roles(id)`    |
+
+---
+
+## **4. Authority Table**
+Defines granular permissions (e.g., create_note, delete_note).
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `name`           | VARCHAR(50)    | UNIQUE, NOT NULL        |
+| `description`    | TEXT           | NULLABLE                |
+
+---
+
+## **5. Role Authorities Table**
+Maps roles to authorities (many-to-many relationship).
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `role_id`        | UUID           | PK, FK → `Roles(id)`    |
+| `authority_id`   | UUID           | PK, FK → `Authority(id)`|
+
+---
+
+## **6. Collaborators Table**
+Manages collaborations on projects and notes.
+
+| Column Name      | Data Type       | Constraints                  |
+|-------------------|----------------|-------------------------------|
+| `id`             | UUID           | PK                           |
+| `user_id`        | UUID           | FK → `Users(id)`             |
+| `project_id`     | UUID           | FK → `Projects(id)`          |
+| `role`           | ENUM('editor', 'viewer', 'admin') | NOT NULL |
+
+---
+
+## **7. Projects Table**
+Tracks high-level projects that contain notes.
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `name`           | VARCHAR(100)   | NOT NULL                |
+| `description`    | TEXT           | NULLABLE                |
+| `owner_id`       | UUID           | FK → `Users(id)`        |
+| `created_at`     | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP |
+| `updated_at`     | TIMESTAMP      | ON UPDATE CURRENT_TIMESTAMP |
+
+---
+
+## **8. Notes Table**
+Stores individual notes within a project.
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `project_id`     | UUID           | FK → `Projects(id)`     |
+| `title`          | VARCHAR(255)   | NOT NULL                |
+| `content`        | TEXT           | NULLABLE                |
+| `created_by`     | UUID           | FK → `Users(id)`        |
+| `created_at`     | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP |
+| `updated_at`     | TIMESTAMP      | ON UPDATE CURRENT_TIMESTAMP |
+
+---
+
+## **9. Drafts Table**
+Manages versions of notes for version control.
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `note_id`        | UUID           | FK → `Notes(id)`        |
+| `content`        | TEXT           | NULLABLE                |
+| `created_at`     | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP |
+
+---
+
+## **10. Media Table**
+Stores media files (images, videos) associated with notes.
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `note_id`        | UUID           | FK → `Notes(id)`        |
+| `media_url`      | TEXT           | NOT NULL                |
+| `media_type`     | VARCHAR(50)    | e.g., 'image', 'video'  |
+| `uploaded_at`    | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP |
+
+---
+
+## **11. Activity Table**
+Tracks user activities within the system.
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `user_id`        | UUID           | FK → `Users(id)`        |
+| `activity_type`  | VARCHAR(100)   | e.g., 'note_created'    |
+| `details`        | JSON           | NULLABLE                |
+| `timestamp`      | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP |
+
+---
+
+## **12. Notifications Table**
+Stores notifications sent to users.
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `user_id`        | UUID           | FK → `Users(id)`        |
+| `type`           | VARCHAR(50)    | e.g., 'email', 'push'   |
+| `message`        | TEXT           | NOT NULL                |
+| `status`         | ENUM('sent', 'pending') | DEFAULT 'pending' |
+| `created_at`     | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP |
+
+---
+
+## **13. Logs Table**
+Stores system and application logs.
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `id`             | UUID           | PK                      |
+| `level`          | VARCHAR(50)    | e.g., 'INFO', 'ERROR'   |
+| `message`        | TEXT           | NOT NULL                |
+| `timestamp`      | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP |
+
+---
+
+## **14. System Configurations Table**
+Manages application-wide configurations.
+
+| Column Name      | Data Type       | Constraints             |
+|-------------------|----------------|--------------------------|
+| `key`            | VARCHAR(100)   | PK                      |
+| `value`          | TEXT           | NULLABLE                |
+| `updated_at`     | TIMESTAMP      | ON UPDATE CURRENT_TIMESTAMP |
+
+---
+
+## **Relationships Summary**
+1. **Users ↔ Roles**: Many-to-Many via `User Roles`.
+2. **Roles ↔ Authorities**: Many-to-Many via `Role Authorities`.
+3. **Projects ↔ Collaborators**: Many-to-Many via `Collaborators`.
+4. **Projects ↔ Notes**: One-to-Many.
+5. **Notes ↔ Drafts**: One-to-Many.
+6. **Notes ↔ Media**: One-to-Many.
+7. **Users ↔ Activity**: One-to-Many.
+8. **Users ↔ Notifications**: One-to-Many.
