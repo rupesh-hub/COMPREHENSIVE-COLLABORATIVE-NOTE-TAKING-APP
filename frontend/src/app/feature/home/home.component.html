@@ -1,0 +1,188 @@
+<section>
+  <div class="max-w-7xl mx-auto grid grid-cols-7 gap-4">
+    <!-- 60% Section -->
+    <div class="col-span-5 flex flex-col gap-4">
+      <div
+        class="header font-medium flex items-center gap-2 text-gray-500"
+      >
+        <fa-icon [icon]="['far', 'folder']"></fa-icon>
+        <span class="">My Projects</span>
+      </div>
+
+      <div
+        class="col-span-5 grid min-h-[200px] grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4"
+      >
+        <div
+          *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"
+          class="flex items-center justify-center"
+        >
+          <div class="relative w-56 h-32">
+            <div
+              class="absolute top-0 left-0 w-24 h-6 bg-white rounded-t-md shadow-sm"
+            ></div>
+
+            <div
+              class="absolute top-3 left-0 w-full h-[calc(100%-12px)] bg-white rounded-md flex flex-col justify-between p-[12px] shadow-sm"
+            >
+              <div class="top flex justify-start gap-x-2 items-center">
+                <div class="h-2 w-2 rounded-full bg-black"></div>
+                <div class="text-sm text-gray-600 text-semibold">
+                  Design exploration
+                </div>
+              </div>
+
+              <div class="bottom flex justify-between items-center">
+                <div class="text-[12px] text-gray-400">
+                  27<span class="text-[10px]">th</span> Nov, 2024
+                </div>
+                <fa-icon
+                  [icon]="['fas', 'ellipsis-h']"
+                  class="text-sm text-gray-400"
+                ></fa-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 40% Section -->
+    <div class="col-span-2 flex flex-col gap-4">
+      <div
+        class="header font-medium flex items-center gap-2 text-gray-500"
+      >
+        <fa-icon [icon]="['far', 'check-circle']"></fa-icon>
+        <span>My Taks</span>
+      </div>
+
+      <div
+        class="task grid grid-cols-1 gap-4 bg-white rounded-lg py-[16px]"
+      >
+        <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+          <div
+            class="body flex justify-between items-center h-[40px] p-[16px]"
+          >
+            <div class="left flex justify-start items-center gap-x-4">
+              <input type="checkbox" />
+              <div
+                class="content flex flex-col justify-start items-start"
+              >
+                <p class="text-sm">Work on plan</p>
+                <small class="text-gray-400 text-[11px] font-semibold"
+                  >3 hour left</small
+                >
+              </div>
+            </div>
+
+            <div class="right">
+              <fa-icon [icon]="['far', 'star']"></fa-icon>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto grid grid-cols-7 gap-4 mt-8 w-full">
+    <!-- 60% Section -->
+    <div class="col-span-5 flex flex-col gap-4">
+      <div
+        class="header font-medium flex items-center gap-2 text-gray-500"
+      >
+        <fa-icon [icon]="['far', 'folder']"></fa-icon>
+        <span>My Notes</span>
+      </div>
+
+      <div
+        class="grid min-h-[200px] grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4"
+      >
+        <div
+          *ngFor="let i of [1, 2, 3, 4]"
+          class="flex items-center justify-center"
+        >
+          <div
+            class="w-full bg-white rounded-md flex flex-col justify-between p-[16px] shadow-sm"
+          >
+            <div class="top flex flex-col">
+              <div
+                class="header w-full flex justify-between gap-x-2 items-center h-[40px] mb-2"
+              >
+                <div class="text-[12px] text-gray-400 text-semibold">
+                  24<span class="text-[11px]">th</span> Nov, 2024
+                </div>
+                <fa-icon
+                  [icon]="['fas', 'ellipsis-h']"
+                  class="text-sm text-gray-400"
+                >
+                </fa-icon>
+              </div>
+
+              <div class="content flex flex-col gap-2">
+                <div class="title text-sm font-semibold text-gray-500">
+                  Plan for future and other directions, what needs to be
+                  done
+                </div>
+                <div class="desc text-[13px] text-justify text-gray-400">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing
+                  elit. In aperiam vero porro sit ex ad hic numquam optio
+                  accusantium vitae laudantium, ...
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="bottom flex justify-start items-center gap-4 mt-4 text-nowrap overflow-x-auto"
+            >
+              <span
+                class="px-3 py-1 rounded-full text-[12px] bg-blue-100/70 text-gray-500"
+                >Workshops</span
+              >
+              <span
+                class="px-3 py-1 rounded-full text-[12px] bg-green-100/70 text-gray-500"
+                >Design challenges</span
+              >
+              <span
+                class="px-3 py-1 rounded-full text-[12px] bg-yellow-100/70 text-gray-500"
+                >Work in progress</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 40% Section -->
+    <div class="col-span-2 flex flex-col gap-4">
+      <div
+        class="header font-medium flex items-center gap-2 text-gray-500"
+      >
+        <fa-icon [icon]="['far', 'check-circle']"></fa-icon>
+        <span>Recent Activity</span>
+      </div>
+
+      <div class="task flex flex-col gap-4 bg-white rounded-lg p-[16px]">
+        <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+          <div class="main flex justify-between items-center">
+            <div class="flex gap-x-2 justify-start items-center">
+              <img
+                src="https://easy-peasy.ai/cdn-cgi/image/quality=80,format=auto,width=700/https://fdczvxmwwjwpwbeeqcth.supabase.co/storage/v1/object/public/images/14334755-dbc4-456e-aec8-043257e724ed/bdbe3802-c024-40be-bf75-fd800547d677.png"
+                alt=""
+                class="h-12 w-12 rounded-full"
+              />
+
+              <div class="flex flex-col gap-1">
+                <small class="font-semibold text-gray-500">Rojan Sharma</small>
+                <small class="text-[12px] text-gray-400">Design challanges</small>
+              </div>
+            </div>
+
+            <div class="text-[12px] text-gray-400">
+              27<span class="text-[10px]">th</span> Nov, 2024
+            </div>
+          </div>
+
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</section>

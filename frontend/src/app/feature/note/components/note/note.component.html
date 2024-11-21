@@ -1,0 +1,24 @@
+<main>
+  <div class="header bg-black w-full h-[40px] rounded-lg flex items-center">
+    <div class="text-sm flex justify-around items-center w-full">
+      <ng-container *ngFor="let tab of tabs">
+        <div
+          class="px-8 py-1 rounded flex justify-start items-center gap-2 cursor-pointer hover:bg-white"
+          [routerLink]="tab.routerLink"
+          [routerLinkActive]="'bg-white text-primary'"
+          [ngClass]="tab.active ? 'bg-white text-primary' : 'bg-gray-400'"
+        >
+          <fa-icon [icon]="tab.icon"></fa-icon>
+          <span>{{ tab.label }}</span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <section class="mt-4">
+    <router-outlet />
+  </section>
+
+</main>
+
+

@@ -1,0 +1,32 @@
+version: '3.8'  # Specifies the Docker Compose file version, defining the features and syntax supported
+
+services:
+  postgres:
+    image: postgres:15-alpine  # Uses the official PostgreSQL 15 Alpine Linux image (lightweight and secure)
+    container_name: postgres-db  # Sets a custom name for the PostgreSQL container for easy identification
+    environment:  # Defines environment variables to configure the PostgreSQL instance
+      POSTGRES_USER: postgres  # Sets the default superuser username
+      POSTGRES_PASSWORD: postgres  # Sets the password for the default superuser
+      POSTGRES_DB: authentication_db  # Creates a default database named 'authentication_db' on first run
+    ports:
+      - "5432:5432"  # Maps host port 5432 to container port 5432, allowing external database connections
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  # Persistent volume to store database files, preserving data between container restarts
+    networks:
+      - dev-network  # Connects the PostgreSQL container to the specified network
+
+  maildev:
+    image: maildev/maildev  # Uses the official Maildev image for email testing and development
+    container_name: maildev  # Sets a custom name for the Maildev container
+    ports:
+      - "1080:1080"  # Maps host port 1080 to container port 1080 for the web-based email interface
+      - "1025:1025"  # Maps host port 1025 to container port 1025 for the SMTP server to receive emails
+    networks:
+      - dev-network  # Connects the Maildev container to the specified network
+
+networks:
+  dev-network:
+    driver: bridge  # Creates a bridge network, allowing containers to communicate with each other and the host
+
+volumes:
+  postgres-data:  # Defines a named volume for persistent PostgreSQL data storage
