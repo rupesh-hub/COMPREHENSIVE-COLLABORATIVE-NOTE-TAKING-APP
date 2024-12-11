@@ -1,0 +1,10 @@
+package com.ccnta.app.authority.emums;
+
+public enum Permissions {
+
+    ADMIN,
+    OWNER,
+    EDITOR,
+    VIEW_NOTE, CREATE_NOTE, EDIT_NOTE, DELETE_NOTE, VIEW_COLLABORATORS, MANAGE_COLLABORATORS, VIEW_PROJECT, EDIT_PROJECT, DELETE_PROJECT, VIEWER
+
+}

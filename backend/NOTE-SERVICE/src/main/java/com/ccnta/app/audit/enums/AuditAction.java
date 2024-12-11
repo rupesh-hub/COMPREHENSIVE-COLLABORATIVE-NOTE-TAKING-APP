@@ -1,0 +1,19 @@
+package com.ccnta.app.audit.enums;
+
+public enum AuditAction {
+
+    PROJECT_DELETION,
+    PROJECT_CREATION,
+    PROJECT_UPDATE,
+    COLLABORATOR_ADDED,
+    COLLABORATOR_REMOVED,
+    NOTE_CREATION,
+    NOTE_UPDATE,
+    NOTE_ARCHIVE,
+    NOTE_RESTORE,
+    NOTE_DELETE,
+    DRAFT_CREATION,
+    DRAFT_UPDATE,
+    DRAFT_DELETE
+
+}

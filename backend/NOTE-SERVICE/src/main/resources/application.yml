@@ -1,0 +1,134 @@
+server:
+  port: 9191
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+  servlet:
+    context-path: /api/v1.0.0/
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+spring:
+  application:
+    name: note-service
+  # Database Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/project_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+
+  # JPA and Hibernate Configuration
+  jpa:
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        generate_statistics: true
+        jdbc:
+          time_zone: UTC
+
+  # Mail Configuration for Maildev
+  mail:
+    host: localhost  # Maildev SMTP host
+    port: 1025  # Maildev SMTP port
+    username: ''  # No authentication for Maildev
+    password: ''
+
+    # Additional Mail Properties
+    properties:
+      mail:
+        smtp:
+          auth: false  # Disable SMTP authentication for Maildev
+          starttls:
+            enable: false  # Disable TLS for local development
+        debug: true  # Enable mail debug logging
+
+    # Mail Sender Configuration
+    default-encoding: UTF-8
+    test-connection: true  # Test mail server connection on startup
+
+  # MVC and Web Configuration
+  mvc:
+    throw-exception-if-no-handler-found: true
+    favicon:
+      enabled: false  # Disable favicon
+  web:
+    resources:
+      add-mappings: false
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.mail: DEBUG  # Increased mail-related logging
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# OpenAPI/Swagger Configuration
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operationsSorter: method
+  cache:
+    disabled: true
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+
+# Custom Mail Properties
+app:
+  mail:
+    # Email Template Configuration
+    from-address: dulalrupesh77@gmail.com
+    support-address: dulalrupesh77@gmail.com
+
+    # Email Sending Configuration
+    smtp:
+      debug: true
+      timeout: 5000  # 5 seconds timeout
+      connection-timeout: 5000  # 5 seconds connection timeout
+
+# Sample Email Template Configuration
+#email:
+#  templates:
+#    welcome: classpath:templates/welcome-email.html
+#    password-reset: classpath:templates/password-reset.html
+#    verification: classpath:templates/account-verification.html
+
+application:
+  url:
+    authorization-server: http://localhost:9090
+  image:
+    upload-dir: assets/images/notes

@@ -1,10 +1,13 @@
 package com.ccnta.app.user.mapper;
 
+import com.ccnta.app.image.Image;
 import com.ccnta.app.role.entity.Role;
 import com.ccnta.app.user.entity.User;
+import com.ccnta.app.user.model.ImageResponse;
 import com.ccnta.app.user.model.RegistrationRequest;
 import com.ccnta.app.user.model.UserResponse;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -42,11 +45,28 @@ public final class UserMapper {
                                 .map(Role::getName)
                                 .collect(Collectors.toSet())
                 )
-                .profile(user.getProfile())
+                .profile(
+                        Optional.ofNullable(user.getProfile())
+                                .map(UserMapper::imageResponse)
+                                .orElse(null)
+                )
                 .build();
     }
 
     private static String randomString() {
         return UUID.randomUUID().toString();
+    }
+
+    public static ImageResponse imageResponse(Image image){
+        return ImageResponse
+                .builder()
+                .imageId(UUID.randomUUID().toString())
+                .name(image.getName())
+                .type(image.getType())
+                .size(image.getSize())
+                .createdAt(image.getCreatedAt().toString())
+                .updatedAt(image.getUpdatedAt().toString())
+                .path(image.getPath())
+                .build();
     }
 }

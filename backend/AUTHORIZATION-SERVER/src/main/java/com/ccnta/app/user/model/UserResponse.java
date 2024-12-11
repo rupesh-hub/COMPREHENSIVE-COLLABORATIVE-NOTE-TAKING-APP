@@ -19,6 +19,6 @@ public class UserResponse {
     private String email;
     private Set<String> roles;
     private boolean enabled;
-    private Image profile;
+    private ImageResponse profile;
 
 }

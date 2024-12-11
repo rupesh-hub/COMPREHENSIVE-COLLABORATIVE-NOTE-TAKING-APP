@@ -8,7 +8,6 @@ server:
 spring:
   application:
     name: authorization-server
-
   # Database Configuration
   datasource:
     url: jdbc:postgresql://localhost:5432/authentication_db
@@ -60,6 +59,8 @@ spring:
   # MVC and Web Configuration
   mvc:
     throw-exception-if-no-handler-found: true
+    favicon:
+      enabled: false  # Disable favicon
   web:
     resources:
       add-mappings: false
